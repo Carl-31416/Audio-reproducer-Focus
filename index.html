@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AudioFocus — Reproductor MP3</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#121a2e;--panel2:#18233c;--line:#293653;--text:#edf2ff;--muted:#98a6c5;--accent:#7c9cff;--accent2:#9c83ff;--green:#54d6a0}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#1e2c50 0,transparent 55%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh;padding:28px 16px}
+main{max-width:940px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:23px;box-shadow:0 8px 28px #647fff38}.brand h1{font-size:21px;margin:0;letter-spacing:.2px}.brand p{margin:1px 0 0;color:var(--muted);font-size:13px}.status{border:1px solid var(--line);padding:7px 11px;border-radius:99px;color:var(--muted);font-size:12px}.panel{background:linear-gradient(145deg,#141d33f5,#10172af5);border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:16px;box-shadow:0 16px 45px #0002}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:15px}.section-head h2{font-size:15px;margin:0;font-weight:650}.sub{font-size:12px;color:var(--muted)}.file-actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:1px solid var(--line);border-radius:12px;background:var(--panel2);color:var(--text);padding:11px 15px;font:600 13px system-ui;cursor:pointer;transition:.15s}.btn:hover{border-color:#6179b8;transform:translateY(-1px)}.btn.primary{background:linear-gradient(120deg,#6e8eff,#9274f4);border:0;color:white}.btn svg{vertical-align:-3px;margin-right:6px}.file-actions .btn{flex:1;min-width:190px}.now{display:flex;align-items:center;gap:17px;min-height:100px}.cover{width:78px;height:78px;flex:none;border-radius:17px;background:linear-gradient(135deg,#25365e,#382d65);display:grid;place-items:center;font-size:30px;border:1px solid #ffffff12}.track-info{min-width:0;flex:1}.track-info h2{margin:0 0 4px;font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.track-info p{margin:0;color:var(--muted);font-size:13px}.time-row{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;font-variant-numeric:tabular-nums;margin:17px 0 6px}input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}.seek{height:5px}.transport{display:flex;align-items:center;justify-content:center;gap:13px;margin:16px 0 20px}.round{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:20px;padding:0}.round.big{width:66px;height:66px;font-size:24px}.skip{width:224px;height:116px;border-radius:18px;font-size:19px;display:flex;align-items:center;justify-content:center;gap:12px}.skip b{font-size:30px}.settings{display:grid;grid-template-columns:1fr 1fr;gap:15px}.setting{background:#0e1629;border:1px solid var(--line);border-radius:14px;padding:14px}.setting label{display:block;font-size:12px;color:var(--muted);margin-bottom:8px}.setting select{width:100%;background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px;font:inherit;font-size:13px}.speed-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.speed-head label{margin:0}.speed-value{font-weight:700;color:#b7c5ff;font-variant-numeric:tabular-nums}.speed-scale{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin-top:1px}.queue{padding:0;overflow:hidden}.queue .section-head{padding:19px 22px 12px;margin:0}.queue-list{max-height:310px;overflow:auto}.item{display:flex;align-items:center;gap:12px;padding:12px 22px;border-top:1px solid #29365388;cursor:pointer}.item:hover{background:#ffffff06}.item.active{background:#718fff15}.num{width:25px;color:var(--muted);font-size:12px;text-align:center;flex:none}.item.active .num{color:#aabaff}.song{min-width:0;flex:1}.song strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:550}.song small{display:block;color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.duration{color:var(--muted);font-size:11px;font-variant-numeric:tabular-nums}.remove{background:none;border:0;color:var(--muted);font-size:18px;cursor:pointer;padding:4px 8px}.remove:hover{color:#ff9b9b}.empty{padding:28px;text-align:center;color:var(--muted);font-size:13px}.break-banner{display:none;text-align:center;background:#183a37;border:1px solid #347c68;color:#b9ffe4;border-radius:13px;padding:13px;margin-top:14px}.break-banner.show{display:block}.break-banner strong{display:block;font-size:16px}.foot{color:var(--muted);font-size:11px;text-align:center;margin:17px 0 5px}.muted-btn{background:transparent}.disabled{opacity:.4;pointer-events:none}@media(max-width:600px){body{padding:17px 11px}.panel{padding:16px;border-radius:16px}.top{align-items:flex-start}.status{font-size:10px}.settings{grid-template-columns:1fr}.now{gap:12px}.cover{width:62px;height:62px}.track-info h2{font-size:16px}.transport{gap:7px}.skip{width:104px;height:76px;font-size:13px}.round{width:47px;height:47px}.round.big{width:58px;height:58px}.item{padding:11px 15px}}
+</style>
+</head>
+<body>
+<main>
+ <header class="top"><div class="brand"><div class="logo">♫</div><div><h1>AudioFocus</h1><p>Reproductor para escuchar y concentrarte</p></div></div><span class="status" id="status">Listo para reproducir</span></header>
+ <section class="panel">
+  <div class="section-head"><h2>Tu biblioteca</h2><span class="sub">MP3 y otros formatos compatibles</span></div>
+  <div class="file-actions">
+   <button class="btn primary" id="pickFiles">＋ Añadir archivos</button>
+   <button class="btn" id="pickFolder">▣ Añadir carpeta</button>
+  </div>
+  <input id="fileInput" type="file" accept="audio/*,.mp3" multiple hidden>
+  <input id="folderInput" type="file" accept="audio/*,.mp3" webkitdirectory directory multiple hidden>
+ </section>
+ <section class="panel">
+  <div class="section-head"><h2>Reproduciendo ahora</h2><span class="sub" id="trackCount">0 pistas</span></div>
+  <div class="now"><div class="cover">♫</div><div class="track-info"><h2 id="title">Selecciona archivos de audio</h2><p id="artist">Tu lista aparecerá aquí</p></div></div>
+  <div class="time-row"><span id="currentTime">0:00</span><span id="totalTime">0:00</span></div>
+  <input class="seek" type="range" id="seek" min="0" max="1000" value="0" aria-label="Posición de reproducción">
+  <div class="transport">
+   <button class="btn skip" id="back5" title="Retroceder 5 segundos"><b>↶</b> 5 s</button>
+   <button class="btn round" id="prev" title="Pista anterior">|◀</button>
+   <button class="btn primary round big" id="play" title="Reproducir o pausar">▶</button>
+   <button class="btn round" id="next" title="Siguiente pista">▶|</button>
+   <button class="btn skip" id="forward5" title="Avanzar 5 segundos">5 s <b>↷</b></button>
+  </div>
+  <div class="setting">
+   <div class="speed-head"><label for="speed">Velocidad de reproducción</label><span class="speed-value" id="speedValue">1.0×</span></div>
+   <input type="range" id="speed" min="0.5" max="1.5" step="0.01" value="1" aria-label="Velocidad de reproducción">
+   <div class="speed-scale"><span>0.5×</span><span>1.0×</span><span>1.5×</span></div>
+  </div>
+  <div class="break-banner" id="breakBanner"><strong>☕ Pausa de descanso</strong><span id="breakCountdown">Tómate un momento para despejar la mente.</span></div>
+ </section>
+ <section class="panel">
+  <div class="section-head"><h2>Pausas de enfoque</h2><span class="sub">Descansos automáticos</span></div>
+  <div class="settings">
+   <div class="setting"><label for="interval">Hacer una pausa cada</label><select id="interval"><option value="0">Sin pausa</option><option value="10">10 segundos</option><option value="30">30 segundos</option><option value="60">1 minuto</option><option value="180">3 minutos</option><option value="300">5 minutos</option></select></div>
+   <div class="setting"><label for="breakLength">Duración de la pausa</label><select id="breakLength"><option value="2">2 segundos</option><option value="4">4 segundos</option><option value="5" selected>5 segundos</option><option value="10">10 segundos</option><option value="15">15 segundos</option><option value="20">20 segundos</option><option value="random">Aleatorio (2, 4 o 6 segundos)</option></select></div>
+   <div class="setting"><label for="rewind">Al terminar, regresar</label><select id="rewind"><option value="0">Sin retroceder</option><option value="2">2 segundos</option><option value="3">3 segundos</option><option value="5" selected>5 segundos</option></select></div>
+   <div class="setting"><label>Funcionamiento</label><div class="sub" style="line-height:1.45">El audio se detiene al llegar al intervalo y se reanuda automáticamente al terminar el descanso. La opción aleatoria elige 2, 4 o 6 segundos.</div></div>
+  </div>
+ </section>
+ <section class="panel queue">
+  <div class="section-head"><h2>Lista de reproducción</h2><button class="btn muted-btn" id="clear">Vaciar lista</button></div>
+  <div class="queue-list" id="queue"><div class="empty">Aún no hay pistas. Añade archivos o una carpeta para comenzar.</div></div>
+ </section>
+ <p class="foot">Los archivos se reproducen directamente en tu navegador; no se suben a ningún servidor.</p>
+</main>
+<audio id="audio" preload="metadata"></audio>
+<script>
+(()=> {
+ const $=id=>document.getElementById(id), audio=$('audio');
+ let tracks=[], index=-1, objectUrl=null, breakTimer=null, countdownTimer=null, elapsed=0, lastTick=Date.now(), breaking=false, wasPlaying=false, lastBreakRemaining=0;
+ const fmt=s=>{if(!Number.isFinite(s)||s<0)return'0:00';s=Math.floor(s);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')};
+ function updateStatus(t){$('status').textContent=t}
+ function render(){
+  $('trackCount').textContent=tracks.length+' '+(tracks.length===1?'pista':'pistas');
+  const q=$('queue');q.innerHTML='';
+  if(!tracks.length){q.innerHTML='<div class="empty">Aún no hay pistas. Añade archivos o una carpeta para comenzar.</div>';return}
+  tracks.forEach((t,i)=>{
+   const row=document.createElement('div');row.className='item'+(i===index?' active':'');
+   const n=document.createElement('span');n.className='num';n.textContent=i===index&& !audio.paused?'♫':String(i+1);
+   const info=document.createElement('div');info.className='song';const name=document.createElement('strong');name.textContent=t.name.replace(/\.[^.]+$/,'');const small=document.createElement('small');small.textContent=t.path||t.name;info.append(name,small);
+   const dur=document.createElement('span');dur.className='duration';dur.textContent=t.duration?fmt(t.duration):'--:--';
+   const rm=document.createElement('button');rm.className='remove';rm.textContent='×';rm.title='Quitar de la lista';rm.onclick=e=>{e.stopPropagation();remove(i)};
+   row.append(n,info,dur,rm);row.onclick=()=>load(i,true);q.append(row);
+  })
+ }
+ function addFiles(files){
+  const incoming=[...files].filter(f=>f.type.startsWith('audio/')||/\.mp3$/i.test(f.name)).sort((a,b)=>{
+   const ap=a.webkitRelativePath||a.name,bp=b.webkitRelativePath||b.name;return ap.localeCompare(bp,undefined,{numeric:true,sensitivity:'base'});
+  });
+  if(!incoming.length){updateStatus('No se encontraron archivos de audio');return}
+  const seen=new Set(tracks.map(t=>t.file));let added=0;
+  for(const f of incoming){if(seen.has(f))continue;seen.add(f);tracks.push({file:f,name:f.name,path:f.webkitRelativePath||f.name,duration:0});added++}
+  render();if(index<0&&tracks.length)load(0,false);
+  updateStatus(added?added+' archivo(s) añadido(s)':'Los archivos ya estaban en la lista');
+ }
+ function load(i,autoplay){
+  if(!tracks.length)return;index=(i+tracks.length)%tracks.length;
+  if(objectUrl)URL.revokeObjectURL(objectUrl);
+  objectUrl=URL.createObjectURL(tracks[index].file);audio.src=objectUrl;audio.playbackRate=Number($('speed').value);
+  $('title').textContent=tracks[index].name.replace(/\.[^.]+$/,'');$('artist').textContent=tracks[index].path;
+  $('currentTime').textContent='0:00';$('totalTime').textContent='0:00';$('seek').value=0;
+  render();if(autoplay)playAudio();else{$('play').textContent='▶';updateStatus('Pista lista')}
+ }
+ function playAudio(){if(index<0&&tracks.length)load(0,false);if(index<0)return;if(breaking)return;audio.play().then(()=>{ $('play').textContent='Ⅱ';updateStatus('Reproduciendo')}).catch(()=>updateStatus('No se pudo reproducir este archivo'))}
+ function pauseAudio(){audio.pause();$('play').textContent='▶';if(!breaking)updateStatus('En pausa')}
+ function next(){if(!tracks.length)return;load((index+1)%tracks.length,true)}
+ function remove(i){const current=index;tracks.splice(i,1);if(!tracks.length){audio.pause();audio.removeAttribute('src');if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=null;index=-1;$('title').textContent='Selecciona archivos de audio';$('artist').textContent='Tu lista aparecerá aquí';$('play').textContent='▶'}else if(i<current){index--; }else if(i===current){index=-1;load(Math.min(i,tracks.length-1),!audio.paused)}render()}
+ $('pickFiles').onclick=()=>$('fileInput').click();$('pickFolder').onclick=()=>$('folderInput').click();
+ $('fileInput').onchange=e=>{addFiles(e.target.files);e.target.value=''};$('folderInput').onchange=e=>{addFiles(e.target.files);e.target.value=''};
+ $('play').onclick=()=>audio.paused?playAudio():pauseAudio();$('next').onclick=next;
+ $('prev').onclick=()=>{if(audio.currentTime>3){audio.currentTime=0}else if(tracks.length)load((index-1+tracks.length)%tracks.length,true)};
+ $('back5').onclick=()=>{if(index>=0)audio.currentTime=Math.max(0,audio.currentTime-5)};
+ $('forward5').onclick=()=>{if(index>=0&&Number.isFinite(audio.duration))audio.currentTime=Math.min(audio.duration,audio.currentTime+5)};
+ $('speed').oninput=e=>{const v=Number(e.target.value);audio.playbackRate=v;$('speedValue').textContent=v.toFixed(1)+'×'};
+ audio.ontimeupdate=()=>{if(!Number.isFinite(audio.duration))return;$('seek').value=audio.currentTime/audio.duration*1000;$('currentTime').textContent=fmt(audio.currentTime);$('totalTime').textContent=fmt(audio.duration)};
+ $('seek').oninput=e=>{if(Number.isFinite(audio.duration))audio.currentTime=Number(e.target.value)/1000*audio.duration};
+ audio.onloadedmetadata=()=>{if(index>=0){tracks[index].duration=audio.duration;render();$('totalTime').textContent=fmt(audio.duration)}};
+ audio.onended=next;
+ function startBreak(){
+  if(breaking)return;breaking=true;wasPlaying=!audio.paused;audio.pause();$('play').textContent='▶';const chosen=$('breakLength').value;lastBreakRemaining=chosen==='random'?[2,4,6][Math.floor(Math.random()*3)]:Number(chosen);$('breakBanner').classList.add('show');updateStatus('Descanso');
+  $('breakCountdown').textContent='Reanudando en '+lastBreakRemaining+' s';clearInterval(countdownTimer);
+  countdownTimer=setInterval(()=>{lastBreakRemaining--;if(lastBreakRemaining>0)$('breakCountdown').textContent='Reanudando en '+lastBreakRemaining+' s';},1000);
+  clearTimeout(breakTimer);breakTimer=setTimeout(()=>{
+   clearInterval(countdownTimer);$('breakBanner').classList.remove('show');breaking=false;
+   const rewind=Number($('rewind').value);if(index>=0)audio.currentTime=Math.max(0,audio.currentTime-rewind);
+   elapsed=0;lastTick=Date.now();if(wasPlaying)playAudio();else updateStatus('Pausa terminada');
+  },lastBreakRemaining*1000);
+ }
+ $('clear').onclick=()=>{audio.pause();if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=null;audio.removeAttribute('src');tracks=[];index=-1;elapsed=0;render();$('title').textContent='Selecciona archivos de audio';$('artist').textContent='Tu lista aparecerá aquí';$('play').textContent='▶';updateStatus('Lista vacía')};
+ setInterval(()=>{const now=Date.now(),delta=(now-lastTick)/1000;lastTick=now;if(!audio.paused&&!breaking&&Number($('interval').value)>0){elapsed+=delta;if(elapsed>=Number($('interval').value))startBreak()}},250);
+ document.addEventListener('visibilitychange',()=>{lastTick=Date.now()});
+ render();
+})();
+</script>
+</body>
+</html>
